@@ -67,7 +67,7 @@ public class AdminRestaurantController {
     ) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
 
-        Restaurant restaurant = restaurantService.findRestaurantById(id);
+        Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
 
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
