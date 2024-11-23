@@ -2,7 +2,7 @@ package com.Florent.model;
 
 public enum USER_ROLE {
 
-    CUSTOMER,
-    RESTAURANT_OWNER,
-    ADMIN
+    ROLE_CUSTOMER,
+    ROLE_RESTAURANT_OWNER,
+    ROLE_ADMIN
 }
