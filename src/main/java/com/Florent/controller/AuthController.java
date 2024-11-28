@@ -75,7 +75,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> singin(@RequestBody LoginRequest req) throws Exception {
+    public ResponseEntity<AuthResponse> singin(@RequestBody LoginRequest req) {
 
         String username = req.getEmail();
         String password = req.getPassword();

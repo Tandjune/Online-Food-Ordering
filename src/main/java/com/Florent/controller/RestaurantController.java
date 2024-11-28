@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/restaurants")
-
 public class RestaurantController {
 
     @Autowired
@@ -23,45 +22,30 @@ public class RestaurantController {
     private UserService userService;
 
     @GetMapping("/search")
-    public ResponseEntity<List<Restaurant>> searchRestaurant(
-            @RequestHeader("Authorization") String jwt,
-            @RequestParam String keyword
-    ) throws Exception {
-
-        User user = userService.findUserByJwtToken(jwt);
+    public ResponseEntity<List<Restaurant>> searchRestaurant(@RequestParam String keyword) {
         List<Restaurant> restaurants = restaurantService.searchRestaurant(keyword);
 
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Restaurant>> getAllRestaurant(
-            @RequestHeader("Authorization") String jwt
-    ) throws Exception {
+    public ResponseEntity<List<Restaurant>> getAllRestaurant() {
 
-        User user = userService.findUserByJwtToken(jwt);
         List<Restaurant> restaurants = restaurantService.getAllRestaurant();
 
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Restaurant> findRestaurantById(
-            @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id
-    ) throws Exception {
+    public ResponseEntity<Restaurant> findRestaurantById(@PathVariable Long id) throws Exception {
 
-        User user = userService.findUserByJwtToken(jwt);
         Restaurant restaurant = restaurantService.findRestaurantById(id);
 
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/add-favorites")
-    public ResponseEntity<RestaurantDto> addToFavorites(
-            @RequestHeader("Authorization") String jwt,
-            @PathVariable Long id
-    ) throws Exception {
+    public ResponseEntity<RestaurantDto> addToFavorites(@RequestHeader("Authorization") String jwt, @PathVariable Long id) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
         RestaurantDto restaurant = restaurantService.addToFavorites(id, user);
