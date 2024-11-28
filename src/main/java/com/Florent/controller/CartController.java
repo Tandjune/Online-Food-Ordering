@@ -1,8 +1,12 @@
-package com.Florent.model;
+package com.Florent.controller;
 
+import com.Florent.model.Cart;
+import com.Florent.model.CartItem;
+import com.Florent.model.User;
 import com.Florent.request.AddCartItemRequest;
 import com.Florent.request.UpdateCartItemRequest;
 import com.Florent.service.CartService;
+import com.Florent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    UserService userService;
 
     @PutMapping("/cart/add")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
@@ -42,7 +49,8 @@ public class CartController {
     @PutMapping("/cart/clear")
     public ResponseEntity<Cart> clearCart(@RequestHeader("Authorization") String jwt) throws Exception {
 
-        Cart cart = cartService.clearCart(jwt);
+        User user = userService.findUserByJwtToken(jwt);
+        Cart cart = cartService.clearCart(user.getId());
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
@@ -50,7 +58,8 @@ public class CartController {
     @GetMapping("/cart/clear")
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt) throws Exception {
 
-        Cart cart = cartService.findCartByUserId(jwt);
+        User user = userService.findUserByJwtToken(jwt);
+        Cart cart = cartService.findCartByUserId(user.getId());
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
