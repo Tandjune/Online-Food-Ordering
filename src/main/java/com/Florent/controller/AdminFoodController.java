@@ -2,12 +2,10 @@ package com.Florent.controller;
 
 import com.Florent.model.Food;
 import com.Florent.model.Restaurant;
-import com.Florent.model.User;
 import com.Florent.request.CreateFoodRequest;
 import com.Florent.response.MessageResponse;
 import com.Florent.service.FoodService;
 import com.Florent.service.RestaurantService;
-import com.Florent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +19,10 @@ public class AdminFoodController {
     private FoodService foodService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private RestaurantService restaurantService;
 
     @PostMapping
-    public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest req,
-                                           @RequestHeader("Authorization") String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
+    public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest req) throws Exception {
         Restaurant restaurant = restaurantService.findRestaurantById(req.getRestaurantId());
         Food food = foodService.createFood(req, req.getCategory(), restaurant);
 
@@ -37,9 +30,7 @@ public class AdminFoodController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteFood(@PathVariable Long id,
-                                                      @RequestHeader("Authorization") String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
+    public ResponseEntity<MessageResponse> deleteFood(@PathVariable Long id) throws Exception {
         foodService.deleteFood(id);
 
         MessageResponse message = new MessageResponse();
@@ -48,10 +39,8 @@ public class AdminFoodController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<MessageResponse> updateFoodAvailabilityStatus(@PathVariable Long id,
-                                                                        @RequestHeader("Authorization") String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
+    @PutMapping("/{id}/update")
+    public ResponseEntity<MessageResponse> updateFoodAvailabilityStatus(@PathVariable Long id) throws Exception {
         foodService.updateAvailabilityStatus(id);
 
         MessageResponse message = new MessageResponse();
