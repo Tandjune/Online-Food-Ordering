@@ -57,6 +57,9 @@ public class RestaurantServiceImp implements RestaurantService {
         if (restaurant.getName() != null) {
             restaurant.setName(updateRestaurant.getName());
         }
+        if (restaurant.getContactInformation() != null) {
+            restaurant.setContactInformation(updateRestaurant.getContactInformation());
+        }
         return restaurantRepository.save(restaurant);
     }
 
