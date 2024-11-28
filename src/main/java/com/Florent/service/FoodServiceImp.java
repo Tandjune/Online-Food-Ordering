@@ -3,11 +3,13 @@ package com.Florent.service;
 import com.Florent.model.Category;
 import com.Florent.model.Food;
 import com.Florent.model.Restaurant;
+import com.Florent.repository.CategoryRepository;
 import com.Florent.repository.FoodRepository;
 import com.Florent.request.CreateFoodRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +19,9 @@ public class FoodServiceImp implements FoodService {
 
     @Autowired
     private FoodRepository foodRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public Food createFood(CreateFoodRequest req, Category category, Restaurant restaurant) {
@@ -30,6 +35,9 @@ public class FoodServiceImp implements FoodService {
         food.setIngredients(req.getIngredients());
         food.setSeasonal(req.isSeasonal());
         food.setVegetarian(req.isVegetarian());
+        food.setCreationDate(new Date());
+
+        categoryRepository.save(category);
 
         Food savedFood = foodRepository.save(food);
         restaurant.getFoods().add(savedFood);
@@ -41,7 +49,7 @@ public class FoodServiceImp implements FoodService {
     public void deleteFood(Long foodId) throws Exception {
         Food food = findFoodById(foodId);
         food.setRestaurant(null);
-        foodRepository.save(food);
+        foodRepository.delete(food);
     }
 
     @Override
