@@ -18,6 +18,7 @@ public class IngredientsItem {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     private IngredientCategory category;
 
