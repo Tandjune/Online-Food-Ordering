@@ -31,7 +31,7 @@ public class CartController {
     }
 
     @PutMapping("/cart-item/update")
-    public ResponseEntity<CartItem> updateCartItemQuantity(@RequestBody UpdateCartItemRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<CartItem> updateCartItemQuantity(@RequestBody UpdateCartItemRequest req) throws Exception {
 
         CartItem cartItem = cartService.updateCartItemQuantity(req.getCartItemId(), req.getQuantity());
 
@@ -55,7 +55,7 @@ public class CartController {
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
-    @GetMapping("/cart/clear")
+    @GetMapping("/cart")
     public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
