@@ -85,4 +85,15 @@ public class IngredientServiceImp implements IngredientService {
 
         return ingredientItemRepository.save(ingredient);
     }
+
+    @Override
+    public void deleteIngredientItem(Long id) throws Exception {
+        Optional<IngredientsItem> optItem = ingredientItemRepository.findById(id);
+        if (optItem.isEmpty()) {
+            throw new Exception("No ingredient item found with the id:" + id);
+        }
+        IngredientsItem ingredient = optItem.get();
+
+        ingredientItemRepository.delete(ingredient);
+    }
 }
