@@ -21,5 +21,8 @@ public class OrderItem {
     private Food food;
     private int quantity;
     private Long totalPrice;
+
+    @ElementCollection
+    @Column(length = 1000)
     private List<String> ingredients;
 }

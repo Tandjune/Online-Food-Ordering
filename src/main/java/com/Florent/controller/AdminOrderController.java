@@ -1,7 +1,6 @@
 package com.Florent.controller;
 
 import com.Florent.model.Order;
-import com.Florent.model.User;
 import com.Florent.service.OrderService;
 import com.Florent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,14 @@ public class AdminOrderController {
     private UserService userService;
 
     @GetMapping("/order/restaurant/{id}")
-    public ResponseEntity<List<Order>> getOrderHistory(@PathVariable Long id, @RequestParam(required = false) String orderStatus, @RequestHeader("Authorization") String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
+    public ResponseEntity<List<Order>> getOrderHistory(@PathVariable Long id, @RequestParam(required = false) String orderStatus) {
         List<Order> orders = orderService.getRestaurantsOrder(id, orderStatus);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @GetMapping("/order/{orderId}/{orderStatus}")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @PathVariable String orderStatus, @RequestHeader("Authorization") String jwt) throws Exception {
-        User user = userService.findUserByJwtToken(jwt);
+    @PutMapping("/order/{orderId}/{orderStatus}")
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @PathVariable String orderStatus) throws Exception {
         Order order = orderService.updateOrder(orderId, orderStatus);
 
         return new ResponseEntity<>(order, HttpStatus.OK);

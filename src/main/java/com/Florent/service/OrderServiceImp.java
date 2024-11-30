@@ -42,7 +42,7 @@ public class OrderServiceImp implements OrderService {
         Address deliveryAddress = order.getDeliveryAddress();
         Address savedAddress = addressRepository.save(deliveryAddress);
 
-        if (!containsAddress(savedAddress,user.getAddresses())) {
+        if (!containsAddress(savedAddress, user.getAddresses())) {
             user.getAddresses().add(savedAddress);
             userRepository.save(user);
         }
@@ -120,18 +120,18 @@ public class OrderServiceImp implements OrderService {
         return optionalOrder.get();
     }
 
-    public boolean containsAddress(Address orderAddress, List<Address> userAddresses){
+    public boolean containsAddress(Address orderAddress, List<Address> userAddresses) {
 
-        for(Address userAddress : userAddresses){
+        for (Address userAddress : userAddresses) {
             boolean sameStreetAddress = orderAddress.getStreetAddress().equals(userAddress.getStreetAddress());
             boolean sameCity = orderAddress.getCity().equals(userAddress.getCity());
             boolean sameProvince = orderAddress.getStateProvince().equals(userAddress.getStateProvince());
             boolean samePostalCode = orderAddress.getPostalCode().equals(userAddress.getPostalCode());
             boolean sameCountry = orderAddress.getCountry().equals(userAddress.getCountry());
 
-            boolean sameAddr =  sameStreetAddress && sameCity && sameProvince && samePostalCode && sameCountry;
+            boolean sameAddr = sameStreetAddress && sameCity && sameProvince && samePostalCode && sameCountry;
 
-            if (sameAddr){
+            if (sameAddr) {
                 return true;
             }
         }
