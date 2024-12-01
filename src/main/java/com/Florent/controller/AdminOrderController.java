@@ -27,8 +27,8 @@ public class AdminOrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
-    @PutMapping("/order/{orderId}/{orderStatus}")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @PathVariable String orderStatus) throws Exception {
+    @PutMapping("/order/{orderId}")
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @RequestParam String orderStatus) throws Exception {
         Order order = orderService.updateOrder(orderId, orderStatus);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
