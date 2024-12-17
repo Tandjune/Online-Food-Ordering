@@ -26,7 +26,6 @@ public class Order {
     @JsonIgnore
     @ManyToOne
     private Restaurant restaurant;
-    private Long totalAmount;
     private String orderStatus;
     private Date createAt;
 
@@ -36,7 +35,6 @@ public class Order {
     @JsonIgnore
     @OneToMany
     private List<OrderItem> items;
-    private int totalItem;
     private Long totalPrice;
 
 }
