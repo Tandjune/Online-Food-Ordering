@@ -15,10 +15,8 @@ public class OrderDto {
     private Address deliveryAddress;
     private String restaurantName;
     private Address restaurantAddress;
-    private Long totalAmount;
     private String orderStatus;
     private Date createAt;
     private List<OrderItem> items;
-    private int totalItem;
     private Long totalPrice;
 }
