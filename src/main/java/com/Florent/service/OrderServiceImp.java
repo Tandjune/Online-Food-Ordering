@@ -1,5 +1,6 @@
 package com.Florent.service;
 
+import com.Florent.dto.OrderDto;
 import com.Florent.model.*;
 import com.Florent.repository.AddressRepository;
 import com.Florent.repository.OrderItemRepository;
@@ -39,6 +40,8 @@ public class OrderServiceImp implements OrderService {
     @Override
     public Order createOrder(OrderRequest order, User user) throws Exception {
 
+        Date creatDate = new Date();
+
         Address deliveryAddress = order.getDeliveryAddress();
         Address savedAddress = addressRepository.save(deliveryAddress);
 
@@ -50,7 +53,7 @@ public class OrderServiceImp implements OrderService {
 
         Order createdOrder = new Order();
         createdOrder.setCustomer(user);
-        createdOrder.setCreateAt(new Date());
+        createdOrder.setCreateAt(creatDate);
         createdOrder.setOrderStatus("PENDING");
         createdOrder.setDeliveryAddress(savedAddress);
         createdOrder.setRestaurant(restaurant);
@@ -75,6 +78,17 @@ public class OrderServiceImp implements OrderService {
 
         Order savedOrder = orderRepository.save(createdOrder);
         restaurant.getOrders().add(savedOrder);
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCustomerName(user.getFullName());
+        orderDto.setDeliveryAddress(savedAddress);
+        orderDto.setRestaurantName(restaurant.getName());
+        orderDto.setRestaurantAddress(restaurant.getAddress());
+        orderDto.setOrderStatus("PENDING");
+        orderDto.setCreateAt(creatDate);
+        orderDto.setItems(orderItems);
+        orderDto.setTotalPrice(totalPrice);
+
 
         return savedOrder;
     }
