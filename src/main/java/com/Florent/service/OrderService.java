@@ -1,5 +1,6 @@
 package com.Florent.service;
 
+import com.Florent.dto.OrderDto;
 import com.Florent.model.Order;
 import com.Florent.model.User;
 import com.Florent.request.OrderRequest;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface OrderService {
 
-    public Order createOrder(OrderRequest order, User user) throws Exception;
+    public OrderDto createOrder(OrderRequest order, User user) throws Exception;
 
     public Order updateOrder(Long orderId, String orderStatus) throws Exception;
 

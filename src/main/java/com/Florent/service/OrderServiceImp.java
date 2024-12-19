@@ -38,7 +38,7 @@ public class OrderServiceImp implements OrderService {
     private CartService cartService;
 
     @Override
-    public Order createOrder(OrderRequest order, User user) throws Exception {
+    public OrderDto createOrder(OrderRequest order, User user) throws Exception {
 
         Date creatDate = new Date();
 
@@ -90,7 +90,7 @@ public class OrderServiceImp implements OrderService {
         orderDto.setTotalPrice(totalPrice);
 
 
-        return savedOrder;
+        return orderDto;
     }
 
     @Override

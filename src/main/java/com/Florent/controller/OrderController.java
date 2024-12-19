@@ -1,5 +1,6 @@
 package com.Florent.controller;
 
+import com.Florent.dto.OrderDto;
 import com.Florent.model.Order;
 import com.Florent.model.User;
 import com.Florent.request.OrderRequest;
@@ -23,10 +24,10 @@ public class OrderController {
     private UserService userService;
 
     @PostMapping("/order")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderRequest req, @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);
-        Order order = orderService.createOrder(req, user);
+        OrderDto order = orderService.createOrder(req, user);
         return new ResponseEntity<>(order, HttpStatus.CREATED);
     }
 
